@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import ThemeSelection from "../components/ThemeSelection";
 import DifficultySelection from "../components/DifficultySelection";
+import ReadyToPlay from "../components/ReadyToPlay";
 
 const Home = () => {
+  const [selectedThemeID, setSelectedThemeID] = useState(null);
+  const [selectedDifficultyID, setSelectedDifficultyID] = useState(null);
+
   return (
     <div>
       <Navbar />
@@ -29,8 +33,20 @@ const Home = () => {
           </button>
         </div>
       </Container>
-      <ThemeSelection />
-      <DifficultySelection />
+      <ThemeSelection
+        selectedThemeID={selectedThemeID}
+        setSelectedThemeID={setSelectedThemeID}
+      />
+      <DifficultySelection
+        selectedDifficultyID={selectedDifficultyID}
+        setSelectedDifficultyID={setSelectedDifficultyID}
+      />
+      {selectedThemeID && selectedDifficultyID && (
+        <ReadyToPlay
+          selectedThemeID={selectedThemeID}
+          selectedDifficultyID={selectedDifficultyID}
+        />
+      )}
     </div>
   );
 };

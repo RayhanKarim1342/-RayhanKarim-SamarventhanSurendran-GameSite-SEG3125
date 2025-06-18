@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import GamePage from "./pages/GamePage";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* Book page removed */}
+          <Route path="/game" element={<GamePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

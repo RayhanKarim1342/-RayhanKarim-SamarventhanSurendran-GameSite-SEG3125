@@ -12,7 +12,6 @@ const NotFound = () => {
         paddingBottom: "200px",
         marginBottom: "250px",
       }}
-      id="theBest"
     >
       <div className="d-flex flex-column align-items-center">
         <h1 className="m-3 display-6 fw-bold text-center">
