@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Container } from "react-bootstrap";
+import { Navbar, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 // const sections = [
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 //   { id: "theBest", label: "Why We're The Best" },
 // ];
 
-const NavigationBar = () => {
+const NavigationBar = ({ HowToPlay = true }) => {
   // const [activeSection, setActiveSection] = useState("");
   // const location = useLocation();
   // const navigate = useNavigate();
@@ -58,10 +58,33 @@ const NavigationBar = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="sm" fixed="top" className="px-3">
       <Container fluid>
+        {!HowToPlay && (
+          <Button
+            variant="light"
+            as={Link}
+            to="/"
+            className="me-3 rounded-pill p-2 px-3 fw-bold"
+            style={{ fontSize: "0.85rem" }}
+          >
+            <i class="bi bi-caret-left-fill"></i>
+          </Button>
+        )}
         <Navbar.Brand as={Link} to="/" className="mb-0 text-light fw-bold fs-4">
           Remember The Shelf
         </Navbar.Brand>
-        <div className="d-flex align-items-center ms-auto"></div>
+        <div className="d-flex align-items-center ms-auto">
+          {HowToPlay && (
+            <Button
+              variant="light"
+              as={Link}
+              to="/howToPlay"
+              className="ms-2 rounded-pill p-2 px-3 fw-bold"
+              style={{ fontSize: "0.85rem" }}
+            >
+              How to Play
+            </Button>
+          )}
+        </div>
       </Container>
     </Navbar>
   );

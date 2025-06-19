@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import GamePage from "./pages/GamePage";
+import HowToPlay from "./pages/HowToPlay";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/game" element={<GamePage />} />
+          <Route path="/howToPlay" element={<HowToPlay />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
