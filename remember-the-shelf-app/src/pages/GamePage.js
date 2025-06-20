@@ -156,6 +156,8 @@ const GamePage = () => {
             items={shelfItems}
             timeUp={timeUp}
             onDrop={handleUserDrop}
+            showResults={showResults}
+            userSlots={userSlots}
           />
           {showResults && (
             <div className="mt-3 text-center">
