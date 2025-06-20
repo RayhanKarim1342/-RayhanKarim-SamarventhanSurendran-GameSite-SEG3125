@@ -18,7 +18,9 @@ const Timer = ({ startTime, onTimeUp }) => {
 
   return (
     <div className="timer">
-      <h2>Time Left: {timeLeft} seconds</h2>
+      <p className="bg-dark text-white rounded-pill shadow px-3 py-2">
+        Time Left: <b>{timeLeft}s</b>
+      </p>
     </div>
   );
 };

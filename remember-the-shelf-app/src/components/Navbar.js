@@ -1,6 +1,8 @@
 import React from "react";
 import { Navbar, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 
 // const sections = [
 //   { id: "ourServices", label: "Our Services" },
@@ -74,15 +76,30 @@ const NavigationBar = ({ HowToPlay = true }) => {
         </Navbar.Brand>
         <div className="d-flex align-items-center ms-auto">
           {HowToPlay && (
-            <Button
-              variant="light"
-              as={Link}
-              to="/howToPlay"
-              className="ms-2 rounded-pill p-2 px-3 fw-bold"
-              style={{ fontSize: "0.85rem" }}
+            <OverlayTrigger
+              trigger={["hover", "focus"]}
+              placement="bottom"
+              overlay={
+                <Popover id="how-to-play-popover">
+                  <Popover.Body className="p-2">
+                    <p className="text-center text-white bg-dark mx-2 mt-2 p-1 rounded-4 shadow mb-0">
+                      Note* If you are in the middle of a game, you will have to
+                      start over if you click on me.
+                    </p>
+                  </Popover.Body>
+                </Popover>
+              }
             >
-              How to Play
-            </Button>
+              <Button
+                variant="light"
+                as={Link}
+                to="/howToPlay"
+                className="ms-2 rounded-pill p-2 px-3 fw-bold"
+                style={{ fontSize: "0.85rem" }}
+              >
+                How to Play
+              </Button>
+            </OverlayTrigger>
           )}
         </div>
       </Container>

@@ -33,40 +33,57 @@ const Shelf = ({ items, timeUp, onDrop }) => {
     }
   };
 
-  const availableItems = shuffledPool.filter(item => !userSlots.includes(item));
+  const availableItems = shuffledPool.filter(
+    (item) => !userSlots.includes(item)
+  );
 
   return (
     <div>
-        <Row className="justify-content-center mt-4 g-4">
+      <Row className="justify-content-center mt-4 g-4">
         {(timeUp ? userSlots : items).map((item, idx) => (
-            <Col
+          <Col
             key={idx}
             xs={items.length === 4 ? 6 : 3}
             md={items.length === 4 ? 3 : 2}
-            >
+          >
             <Card
-                className="text-center shadow d-flex align-items-center justify-content-center"
-                style={{
+              className="text-center shadow d-flex align-items-center justify-content-center"
+              style={{
                 minHeight: "90px",
                 height: "90px",
                 width: "90px",
                 fontSize: "2rem",
-                margin: "auto"
-                }}
-                onDragOver={e => timeUp && !userSlots[idx] && e.preventDefault()}
-                onDrop={e => timeUp && handleDrop(idx)}
+                margin: "auto",
+              }}
+              onDragOver={(e) =>
+                timeUp && !userSlots[idx] && e.preventDefault()
+              }
+              onDrop={(e) => timeUp && handleDrop(idx)}
             >
-                <Card.Body className="d-flex align-items-center justify-content-center p-0" style={{ height: "100%" }}>
-                {item
-                    ? <span style={{ fontSize: "2.5rem", width: "100%", textAlign: "center" }}>{item}</span>
-                    : timeUp && <span style={{ color: "#ccc" }}>?</span>}
-                </Card.Body>
+              <Card.Body
+                className="d-flex align-items-center justify-content-center p-0"
+                style={{ height: "100%" }}
+              >
+                {item ? (
+                  <span
+                    style={{
+                      fontSize: "2.5rem",
+                      width: "100%",
+                      textAlign: "center",
+                    }}
+                  >
+                    {item}
+                  </span>
+                ) : (
+                  timeUp && <span style={{ color: "#ccc" }}>?</span>
+                )}
+              </Card.Body>
             </Card>
-            </Col>
+          </Col>
         ))}
-        </Row>
+      </Row>
       {timeUp && (
-        <div className="d-flex justify-content-center mt-4">
+        <div className="d-flex justify-content-center mt-5">
           {availableItems.map((item, idx) => (
             <div
               key={idx}

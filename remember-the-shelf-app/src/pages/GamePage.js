@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Timer from "../components/Timer";
 import Alert from "react-bootstrap/Alert";
-import Shelf from "../components/shelf";
+import Shelf from "../components/Shelf";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import NavigationBar from "../components/Navbar";
 
 const themeItems = {
   1: ["🧸", "🚗", "🎲", "🪀", "🪁", "🦖", "🛴", "🪆"],
@@ -16,6 +19,18 @@ const difficultySlots = {
   1: 4,
   2: 6,
   3: 8,
+};
+
+const themeTexts = {
+  1: "Toys",
+  2: "Home",
+  3: "Fruits & Veggies",
+};
+
+const difficultyTexts = {
+  1: "Beginner",
+  2: "Challenger",
+  3: "Memory Wizard",
 };
 
 function getRandomItems(arr, n) {
@@ -41,7 +56,11 @@ const GamePage = () => {
     setTheme(t);
     setDifficulty(d);
 
-    const items = getRandomItems(themeItems[t], difficultySlots[d]);
+    // Always use numbers for lookups
+    const items = getRandomItems(
+      themeItems[Number(t)],
+      difficultySlots[Number(d)]
+    );
     setShelfItems(items);
   }, []);
 
@@ -82,61 +101,86 @@ const GamePage = () => {
   };
 
   return (
-    <Container className="mt-5 border border-dark-subtle rounded-4 shadow-lg"
-      style={{ minHeight: "600px" }}>
-      <div className="d-flex flex-column align-items-center">
-        <div className="mb-3">
-          <span className="fw-bold">Theme:</span> {theme} &nbsp; | &nbsp;
-          <span className="fw-bold">Difficulty:</span> {difficulty}
-        </div>
-        {!timeUp && <Timer startTime={10} onTimeUp={handleTimeUp} />}
-        {timeUp && !showResults && (
-          <>
-            <Alert
-              key="warning"
-              variant="warning"
-              className="mt-5 rounded-4 shadow-sm"
-            >
-              The Time is Up! Drag the emojis back to their original spots.
-            </Alert>
-            <Button
-              className="mt-4"
-              variant="success"
-              onClick={handleDonePlaying}
-              disabled={userSlots.filter(Boolean).length !== shelfItems.length}
-            >
-              View Results
-            </Button>
-          </>
-        )}
-        <Shelf
-          theme={theme}
-          difficulty={difficulty}
-          items={shelfItems}
-          timeUp={timeUp}
-          onDrop={handleUserDrop}
-        />
-        {showResults && (
-          <div className="mt-5 text-center">
-            <h2>Results</h2>
-            <p>
-              Score: <b>{score}</b>
-            </p>
-            {completionTime !== null && (
-              <p>
-                Time to complete: <b>{completionTime} seconds</b>
-              </p>
-            )}
-            <Button
-              className="ms-5 btn btn-light rounded-4 mt-5 p-3 px-5 shadow border border-dark-subtle fw-bold fs-3"
-              onClick={handleGoHome}
-            >
-              Play Again
-            </Button>
+    <>
+      <NavigationBar />
+      <Container
+        className="mt-5 border border-dark-subtle rounded-4 shadow-lg"
+        style={{ minHeight: "600px" }}
+      >
+        <div className="d-flex flex-column align-items-center mt-3">
+          <div className="mb-3">
+            <span className="fw-bold">Theme:</span> {themeTexts[theme]} &nbsp; |
+            &nbsp;
+            <span className="fw-bold">Difficulty:</span>{" "}
+            {difficultyTexts[difficulty]}
           </div>
-        )}
-      </div>
-    </Container>
+          {!timeUp && shelfItems.length > 0 && (
+            <>
+              <Row>
+                <Col md={12} className="d-flex justify-content-center">
+                  <h2 className="bg-dark text-white fw-bold rounded-pill shadow py-3 px-4 mb-4">
+                    Remember the Shelf!
+                  </h2>
+                </Col>
+              </Row>
+              <Timer
+                startTime={30 - shelfItems.length * 2}
+                onTimeUp={handleTimeUp}
+              />
+            </>
+          )}
+          {timeUp && !showResults && (
+            <>
+              <Alert
+                key="warning"
+                variant="warning"
+                className="mt-3 rounded-4 shadow-sm"
+              >
+                The Time is Up! Drag the items back to their original spots.
+              </Alert>
+              <Button
+                className="mt-4"
+                variant="success"
+                onClick={handleDonePlaying}
+                disabled={
+                  userSlots.filter(Boolean).length !== shelfItems.length
+                }
+              >
+                View Results
+              </Button>
+            </>
+          )}
+          <Shelf
+            theme={theme}
+            difficulty={difficulty}
+            items={shelfItems}
+            timeUp={timeUp}
+            onDrop={handleUserDrop}
+          />
+          {showResults && (
+            <div className="mt-3 text-center">
+              <h2 className="bg-dark text-white fw-bold rounded-pill shadow p-2">
+                Results
+              </h2>
+              <p className="bg-dark text-white rounded-pill p-2 shadow mt-3 mx-4">
+                Score: <b>{score}</b>
+              </p>
+              {completionTime !== null && (
+                <p className="bg-dark text-white rounded-pill p-2 shadow mt-3 mx-4">
+                  Completion Time: <b>{completionTime}s</b>
+                </p>
+              )}
+              <Button
+                className="mb-5 btn btn-light rounded-4 mt-5 p-3 px-5 shadow border border-dark-subtle fw-bold fs-3"
+                onClick={handleGoHome}
+              >
+                Play Again
+              </Button>
+            </div>
+          )}
+        </div>
+      </Container>
+    </>
   );
 };
 
