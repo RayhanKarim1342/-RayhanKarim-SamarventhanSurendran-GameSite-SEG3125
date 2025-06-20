@@ -17,6 +17,13 @@ const difficultyTexts = {
 const ReadyToPlay = ({ selectedThemeID, selectedDifficultyID }) => {
   const navigate = useNavigate();
 
+  const handlePlayNow = () => {
+    // Save selections to localStorage
+    localStorage.setItem("theme", selectedThemeID);
+    localStorage.setItem("difficulty", selectedDifficultyID);
+    navigate("/game");
+  };
+
   return (
     <Container className="mt-5 pb-2">
       <Row className="ms-4 mb-0 ps-2" style={{ marginRight: "250px" }}>
@@ -39,7 +46,7 @@ const ReadyToPlay = ({ selectedThemeID, selectedDifficultyID }) => {
         </Col>
         <Col md={5}>
           <p
-            class="ms-5 text-white bg-dark mb-0 mt-2 p-2 px-4 rounded-pill shadow d-flex justify-content-between"
+            className="ms-5 text-white bg-dark mb-0 mt-2 p-2 px-4 rounded-pill shadow d-flex justify-content-between"
             style={{ lineHeight: 1.8 }}
           >
             Theme:
@@ -50,7 +57,7 @@ const ReadyToPlay = ({ selectedThemeID, selectedDifficultyID }) => {
         </Col>
         <Col md={5}>
           <p
-            class="me-5 text-white bg-dark mb-0 mt-2 p-2 px-4 rounded-pill shadow d-flex justify-content-between"
+            className="me-5 text-white bg-dark mb-0 mt-2 p-2 px-4 rounded-pill shadow d-flex justify-content-between"
             style={{ lineHeight: 1.8 }}
           >
             Difficulty:
@@ -62,7 +69,7 @@ const ReadyToPlay = ({ selectedThemeID, selectedDifficultyID }) => {
       </Row>
       <button
         className="ms-5 btn btn-light rounded-4 mt-5 p-3 px-5 shadow border border-dark-subtle fw-bold fs-3"
-        onClick={() => navigate("/game")}
+        onClick={handlePlayNow}
       >
         Play Now
       </button>

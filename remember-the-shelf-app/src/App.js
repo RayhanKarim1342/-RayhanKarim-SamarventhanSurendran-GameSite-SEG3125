@@ -23,7 +23,7 @@ function App() {
         style={{ height: "48px" }}
       >
         <Container className="text-center m-0 p-0">
-          Rayhan Karim & Samarventhan Surendran
+          can't have our names here, we might remove this later
         </Container>
       </footer>
     </>

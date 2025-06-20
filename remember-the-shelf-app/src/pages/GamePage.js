@@ -1,32 +1,135 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Timer from "../components/Timer";
 import Alert from "react-bootstrap/Alert";
+import Shelf from "../components/shelf";
+import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
+
+const themeItems = {
+  1: ["🧸", "🚗", "🎲", "🪀", "🪁", "🦖", "🛴", "🪆"],
+  2: ["🍽️", "🛏️", "🪑", "🧹", "🖼️", "🪞", "🛋️", "🧺"],
+  3: ["🍎", "🥦", "🍌", "🥕", "🍇", "🍉", "🍓", "🍋"],
+};
+
+const difficultySlots = {
+  1: 4,
+  2: 6,
+  3: 8,
+};
+
+function getRandomItems(arr, n) {
+  const shuffled = arr.slice().sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, n);
+}
 
 const GamePage = () => {
   const [timeUp, setTimeUp] = useState(false);
+  const [theme, setTheme] = useState("1");
+  const [difficulty, setDifficulty] = useState("1");
+  const [shelfItems, setShelfItems] = useState([]);
+  const [userSlots, setUserSlots] = useState([]);
+  const [showResults, setShowResults] = useState(false);
+  const [score, setScore] = useState(0);
+  const [completionTime, setCompletionTime] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const t = localStorage.getItem("theme") || "1";
+    const d = localStorage.getItem("difficulty") || "1";
+    setTheme(t);
+    setDifficulty(d);
+
+    const items = getRandomItems(themeItems[t], difficultySlots[d]);
+    setShelfItems(items);
+  }, []);
 
   const handleTimeUp = () => {
     setTimeUp(true);
+    setCompletionTime(Date.now());
+  };
+
+  const handleUserDrop = (slots) => {
+    setUserSlots(slots);
+  };
+
+  const handleDonePlaying = () => {
+    let correct = 0;
+    let incorrect = 0;
+    for (let i = 0; i < shelfItems.length; i++) {
+      if (userSlots[i] === shelfItems[i]) correct++;
+      else if (userSlots[i]) incorrect++;
+    }
+    // Score mechanics we can change this later.
+    const totalScore = correct * 10 - incorrect * 10;
+    setScore(totalScore);
+
+    if (completionTime) {
+      const seconds = Math.round((Date.now() - completionTime) / 1000);
+      setCompletionTime(seconds);
+    }
+
+    setShowResults(true);
+  };
+
+  const handleGoHome = () => {
+    navigate("/");
   };
 
   return (
-    <Container className="mt-5 border border-dark-subtle rounded-4 shadow-lg">
+    <Container className="mt-5 border border-dark-subtle rounded-4 shadow-lg"
+      style={{ minHeight: "600px" }}>
       <div className="d-flex flex-column align-items-center">
+        <div className="mb-3">
+          <span className="fw-bold">Theme:</span> {theme} &nbsp; | &nbsp;
+          <span className="fw-bold">Difficulty:</span> {difficulty}
+        </div>
         {!timeUp && <Timer startTime={10} onTimeUp={handleTimeUp} />}
-        {timeUp && (
-          <Alert
-            key="warning"
-            variant="warning"
-            className="mt-5 rounded-4 shadow-sm"
-          >
-            The Time is Up!
-          </Alert>
+        {timeUp && !showResults && (
+          <>
+            <Alert
+              key="warning"
+              variant="warning"
+              className="mt-5 rounded-4 shadow-sm"
+            >
+              The Time is Up! Drag the emojis back to their original spots.
+            </Alert>
+            <Button
+              className="mt-4"
+              variant="success"
+              onClick={handleDonePlaying}
+              disabled={userSlots.filter(Boolean).length !== shelfItems.length}
+            >
+              View Results
+            </Button>
+          </>
         )}
-        <h1 className="m-3 display-6 fw-bold text-center">
-          we need to add the timer at the top and the shelf at the bottom, with
-          items that are randomly assorted
-        </h1>
+        <Shelf
+          theme={theme}
+          difficulty={difficulty}
+          items={shelfItems}
+          timeUp={timeUp}
+          onDrop={handleUserDrop}
+        />
+        {showResults && (
+          <div className="mt-5 text-center">
+            <h2>Results</h2>
+            <p>
+              Score: <b>{score}</b>
+            </p>
+            {completionTime && (
+              <p>
+                Time to complete: <b>{completionTime} seconds</b>
+              </p>
+            )}
+          <Button
+            className="ms-5 btn btn-light rounded-4 mt-5 p-3 px-5 shadow border border-dark-subtle fw-bold fs-3"
+            onClick={handleGoHome}
+          >
+            Play Again
+          </Button>
+          </div>
+        )}
       </div>
     </Container>
   );
