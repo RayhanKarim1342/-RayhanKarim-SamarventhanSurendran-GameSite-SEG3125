@@ -69,7 +69,7 @@ const GamePage = () => {
     }
 
     // Score mechanics, can be adjusted
-    const baseScore = correct * 10 - incorrect * 10;
+    const baseScore = correct * 10 - incorrect * 20;
     const timeBonus = Math.max(0, 40 - secondsTaken); // we can change (40) how much we want to give as time points
     const totalScore = baseScore + timeBonus;
 
