@@ -23,7 +23,7 @@ function App() {
         style={{ height: "48px" }}
       >
         <Container className="text-center m-0 p-0">
-          can't have our names here, we might remove this later
+          Thanks for playing Remember The Shelf!
         </Container>
       </footer>
     </>
