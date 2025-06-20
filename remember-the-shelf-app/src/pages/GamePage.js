@@ -104,7 +104,7 @@ const GamePage = () => {
     <>
       <NavigationBar />
       <Container
-        className="mt-5 border border-dark-subtle rounded-4 shadow-lg"
+        className="mt-5 mb-5 border border-dark-subtle rounded-4 shadow-lg"
         style={{ minHeight: "600px" }}
       >
         <div className="d-flex flex-column align-items-center mt-3">
@@ -161,7 +161,7 @@ const GamePage = () => {
           />
           {showResults && (
             <div className="mt-3 text-center">
-              <h2 className="bg-dark text-white fw-bold rounded-pill shadow p-2">
+              <h2 className="mt-5 bg-dark text-white fw-bold rounded-pill shadow p-2">
                 Results
               </h2>
               <p className="bg-dark text-white rounded-pill p-2 shadow mt-3 mx-4">

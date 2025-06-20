@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar";
 import ThemeSelection from "../components/ThemeSelection";
 import DifficultySelection from "../components/DifficultySelection";
 import ReadyToPlay from "../components/ReadyToPlay";
+import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 const Home = () => {
   const [selectedThemeID, setSelectedThemeID] = useState(null);
@@ -28,9 +30,14 @@ const Home = () => {
             variety of themes and difficulty levels to match pairs and improve
             your cognitive skills
           </p>
-          <button className="btn btn-light rounded-4 mt-5 fw-bold p-3 shadow">
+          <Button
+            variant="light"
+            as={Link}
+            to="/howToPlay"
+            className="ms-2 rounded-4 p-2 px-3 fw-bold py-3 shadow"
+          >
             Learn More
-          </button>
+          </Button>
         </div>
       </Container>
       <ThemeSelection

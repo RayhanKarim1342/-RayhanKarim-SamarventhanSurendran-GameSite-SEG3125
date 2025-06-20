@@ -49,7 +49,8 @@ const HowToPlay = () => {
           <Col md={12}>
             <p className="ms-4 ps-2 pe-5 mt-3 display-6 fs-5">
               Simply drag and drop the items available to you at the bottom of
-              the shelf into their correct location!
+              the shelf into their correct location! Be careful though, once you
+              place an item into a spot you cannot move it again.
             </p>
           </Col>
         </Row>
