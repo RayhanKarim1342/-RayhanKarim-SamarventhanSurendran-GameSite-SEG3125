@@ -105,7 +105,7 @@ const GamePage = () => {
       <NavigationBar />
       <Container
         className="mt-5 mb-5 border border-dark-subtle rounded-4 shadow-lg"
-        style={{ minHeight: "600px" }}
+        style={{ minHeight: "800px" }}
       >
         <div className="d-flex flex-column align-items-center mt-3">
           <div className="mb-3">
