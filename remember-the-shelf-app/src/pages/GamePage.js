@@ -32,6 +32,7 @@ const GamePage = () => {
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
   const [completionTime, setCompletionTime] = useState(null);
+  const [placementStartTime, setPlacementStartTime] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const GamePage = () => {
 
   const handleTimeUp = () => {
     setTimeUp(true);
-    setCompletionTime(Date.now());
+    setPlacementStartTime(Date.now());
   };
 
   const handleUserDrop = (slots) => {
@@ -60,15 +61,19 @@ const GamePage = () => {
       if (userSlots[i] === shelfItems[i]) correct++;
       else if (userSlots[i]) incorrect++;
     }
-    // Score mechanics we can change this later.
-    const totalScore = correct * 10 - incorrect * 10;
-    setScore(totalScore);
 
-    if (completionTime) {
-      const seconds = Math.round((Date.now() - completionTime) / 1000);
-      setCompletionTime(seconds);
+    let secondsTaken = 0;
+    if (placementStartTime) {
+      secondsTaken = Math.round((Date.now() - placementStartTime) / 1000);
+      setCompletionTime(secondsTaken);
     }
 
+    // Score mechanics, can be adjusted
+    const baseScore = correct * 10 - incorrect * 10;
+    const timeBonus = Math.max(0, 40 - secondsTaken); // we can change 40 how much we want to give as time points
+    const totalScore = baseScore + timeBonus;
+
+    setScore(totalScore);
     setShowResults(true);
   };
 
@@ -117,17 +122,17 @@ const GamePage = () => {
             <p>
               Score: <b>{score}</b>
             </p>
-            {completionTime && (
+            {completionTime !== null && (
               <p>
                 Time to complete: <b>{completionTime} seconds</b>
               </p>
             )}
-          <Button
-            className="ms-5 btn btn-light rounded-4 mt-5 p-3 px-5 shadow border border-dark-subtle fw-bold fs-3"
-            onClick={handleGoHome}
-          >
-            Play Again
-          </Button>
+            <Button
+              className="ms-5 btn btn-light rounded-4 mt-5 p-3 px-5 shadow border border-dark-subtle fw-bold fs-3"
+              onClick={handleGoHome}
+            >
+              Play Again
+            </Button>
           </div>
         )}
       </div>
