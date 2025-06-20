@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Timer from "../components/Timer";
 import Alert from "react-bootstrap/Alert";
-import Shelf from "../components/Shelf";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import NavigationBar from "../components/Navbar";
+import Shelf from "../components/ShelfItem";
 
 const themeItems = {
   1: ["🧸", "🚗", "🎲", "🪀", "🪁", "🦖", "🛴", "🪆"],

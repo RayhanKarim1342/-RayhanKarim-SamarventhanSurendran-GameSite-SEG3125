@@ -8,7 +8,7 @@ function shuffleArray(array) {
     .map(({ value }) => value);
 }
 
-const Shelf = ({ items, timeUp, onDrop }) => {
+const ShelfItem = ({ items, timeUp, onDrop }) => {
   const [userSlots, setUserSlots] = useState(Array(items.length).fill(null));
   const [draggedItem, setDraggedItem] = useState(null);
   const [shuffledPool, setShuffledPool] = useState([]);
@@ -108,4 +108,4 @@ const Shelf = ({ items, timeUp, onDrop }) => {
   );
 };
 
-export default Shelf;
+export default ShelfItem;
