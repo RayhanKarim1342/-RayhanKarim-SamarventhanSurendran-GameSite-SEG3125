@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
-    <>
+    <div className="app-wrapper d-flex flex-column min-vh-100">
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -26,7 +26,7 @@ function App() {
           Thanks for playing Remember The Shelf!
         </Container>
       </footer>
-    </>
+    </div>
   );
 }
 
